@@ -33,9 +33,58 @@ window.addEventListener('DOMContentLoaded', function  () {
         }
       }
     }
-
-
-
   });
+
+  //Timer
+  let deadline = '2020-06-22';
+
+  const getRemainingTime = endtime => {
+
+    let timeDiff = Date.parse(endtime) - Date.parse(new Date()),
+        seconds = Math.floor((timeDiff / 1000) % 60),
+        minutes = Math.floor((timeDiff / 1000 / 60) % 60),
+        hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24),
+        days = Math.floor((timeDiff / (1000 * 60 * 60 * 24)));
+
+    return {
+      'total' : timeDiff,
+      'hours': hours,
+      'minutes': minutes,
+      'seconds': seconds,
+      'days': days
+    }
+  }
+  const setTimer = (id, endtime) => {
+
+    let timer = document.getElementById(id),
+        timerHours = timer.querySelector('.hours'),
+        timerMinutes = timer.querySelector('.minutes'),
+        timerSeconds = timer.querySelector('.seconds'),
+        timerDays = timer.querySelector('.days'),
+        timeInterval = setInterval(updateClock, 1000);
+    
+    const addZero = num => {
+      if (num < 10) {
+        num = '0' + num;
+      }
+      return num;
+    }
+
+    function updateClock() {
+      let t = getRemainingTime(endtime);
+      timerHours.textContent = addZero(t.hours);
+      timerMinutes.textContent = addZero(t.minutes);
+      timerSeconds.textContent = addZero(t.seconds);
+      timerDays.textContent = addZero(t.days);
+      
+
+      if (t.total <= 0) {
+        clearInterval(timeInterval);
+      }
+    }
+  }
+
+  setTimer('timer', deadline);
+
 
 });
