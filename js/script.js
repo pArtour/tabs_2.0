@@ -87,4 +87,44 @@ window.addEventListener('DOMContentLoaded', function  () {
   setTimer('timer', deadline);
 
 
+
+function showModalWindow (overlayClass, closeBtnClass, modalActiveClass) {
+
+let overlay = document.querySelector(`.${overlayClass}`),
+    close = document.querySelector(`.${closeBtnClass}`),
+    target;
+
+  document.body.addEventListener('click', function (event) {
+    if (event.target.classList.contains('show-modal-btn')) {
+      target = event.target;
+
+      overlay.style.display = 'block';
+      target.classList.add(modalActiveClass);
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  close.addEventListener('click', function () {
+    overlay.style.display = 'none';
+    target.classList.remove(`.${modalActiveClass}`);
+    document.body.style.overflow = '';
+  });
+}
+
+showModalWindow('overlay', 'popup-close', 'more-splash');
+  // let more = document.querySelector('.more'),
+  //     overlay = document.querySelector('.overlay'),
+  //     close = document.querySelector('.popup-close');
+
+  // more.addEventListener('click', function() {
+  //   overlay.style.display = 'block';
+  //   this.classList.add('more-splash');
+  //   document.body.style.overflow = 'hidden';
+  // });
+
+  // close.addEventListener('click', function() {
+  //   overlay.style.display = 'none';
+  //   more.classList.remove('more-splash');
+  //   document.body.style.overflow = '';
+  // });
 });
